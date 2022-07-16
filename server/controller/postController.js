@@ -2,6 +2,8 @@ const catchAsyncError = require('../middleware/catchAsyncError');
 const ErrorHandler = require('../utils/errorhandler');
 const { Message } = require('../constant/Message');
 const Post = require('../models/post');
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema.Types;
 
 // post create logic
 
@@ -42,17 +44,13 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
 // like Post
 
 exports.likePost = catchAsyncError(async (req, res, next) => {
-  // if (!req.params.postId) {
-  //   return next(new ErrorHandler('please provide postId', 400));
-  // }
+  
   const post = await Post.findById(req.params.postId);
-  // if (!post) {
-  //   return next(new ErrorHandler('No post found', 404));
-  // }
-  if (post.likes.includes(req.user.id)) {
+  
+  if (post.likes.filter((e) => e.userId == req.user.id).length > 0) {
     return next(new ErrorHandler('You already liked this post', 400));
   }
-  post.likes.push(req.user.id);
+  post.likes.push({ userId: req.user.id, Date: Date.now() });
   await post.save();
   return res.status(200).json({ message: Message('Post').like, post });
 });
@@ -61,5 +59,4 @@ exports.likePost = catchAsyncError(async (req, res, next) => {
 
 exports.dislikePost = catchAsyncError(async (req, res, next) => {
   
-})
-
+});

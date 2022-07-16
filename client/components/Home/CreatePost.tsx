@@ -33,7 +33,7 @@ const CreatePost = () => {
           value={text}
           onChange={(e) => settext(e.target.value)}
           placeholder='what`s up?'
-          className='placeholder-gray-600 dark:placeholder-gray-300 p-4 ml-2 w-full rounded-lg'
+          className='placeholder-gray-600 dark:placeholder-gray-300 bg-gray-100 dark:bg-gray-800 p-4 ml-2 w-full rounded-lg'
           cols={20}
           rows={4}
         ></textarea>
