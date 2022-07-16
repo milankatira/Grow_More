@@ -1,6 +1,4 @@
-import React from 'react';
-
-const profile = () => {
+import React from 'react';const profile = () => {
   return (
     <div>
       <section className='rounded-3xl border-2 border-red-500 m-8 shadow-xl  p-8 mt-10 hover:shadow-2xl transition-shadow duration-500'>

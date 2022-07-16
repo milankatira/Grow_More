@@ -19,9 +19,6 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
     password,
     phone,
   });
-  // const tokenForEmailVarification = await getTokenForEmailVarification({
-  //   createdUser: user._id,
-  // });
   sendToken(user, 201, res);
 });
 
@@ -41,5 +38,4 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler('email or password is incorrect', 400));
   }
   sendToken(user, 200, res);
-  return res.status(201).json({ message: 'logged user successfully', user });
 });

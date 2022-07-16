@@ -21,7 +21,18 @@ const postSchema = new mongoose.Schema(
     usersLikePost: [
       { likedUserId: { type: String }, likedDate: { type: Date }, _id: false },
     ],
-    likes: [{ type: ObjectId, ref: 'User' }],
+    likes: [
+      {
+        userId: {
+          type: ObjectId,
+          ref: 'User',
+        },
+        Date: {
+          type:Date,
+        },
+        _id: false,
+      },
+    ],
   },
 
   {
