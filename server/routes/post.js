@@ -3,24 +3,16 @@ const {
   createPost,
   getPostByAuthId,
   deletePost,
-  getPostById,
-  getPostByUserId,
-  getPostByPostId,
+  likePost,
 } = require('../controller/postController');
+
 const router = express.Router();
 
+const { isAuthenticUser } = require('../middleware/auth');
 //post Route
-router.route('/postCreate').post(createPost);
-// router.route('/getPostByUserId').get(getPostByUserId);
-router.route('/deletePost/:postId').delete(deletePost);
-// router.route('/getPostByPostId/:postId').get(getPostByPostId);
+router.route('/postCreate').post(isAuthenticUser, createPost);
+router.route('/authPost').get(isAuthenticUser, getPostByAuthId);
+router.route('/deletePost/:postId').delete(isAuthenticUser, deletePost);
+router.route('/likePost/:postId').put(isAuthenticUser, likePost);
 
 module.exports = router;
-
-// router.get(
-//   '/usersLikedPost/:postId',
-//   authentication,
-//   postController.usersLikedPostList,
-// );
-
-// router.route('/likeDisLikePost'.likeDisLikePost);
