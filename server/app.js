@@ -13,7 +13,7 @@ const errorMiddleware = require('./middleware/error');
 const bodyParser = require('body-parser');
 
 const dotenv = require('dotenv');
-
+const { routes } = require('./routes/index');
 dotenv.config({ path: 'server/config/config.env' });
 
 const cors = require('cors');
@@ -21,6 +21,8 @@ const cors = require('cors');
 // const RedisStore = require('connect-redis')(session);
 // const RedisClient = require('./config/redis.config.js');
 const user = require('./routes/user');
+const post = require('./routes/post');
+// const { routes } = require('./routes');
 
 // app.use(
 //   session({
@@ -37,7 +39,7 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
-app.use('/api', [user]);
+app.use('/api', [routes.post, routes.user]);
 app.use(errorMiddleware);
 
 module.exports = app;
