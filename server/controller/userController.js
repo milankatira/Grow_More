@@ -19,9 +19,6 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
     password,
     phone,
   });
-  // const tokenForEmailVarification = await getTokenForEmailVarification({
-  //   createdUser: user._id,
-  // });
   sendToken(user, 201, res);
 });
 

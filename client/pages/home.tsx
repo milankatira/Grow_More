@@ -1,25 +1,18 @@
+import axios from 'axios';
 import React from 'react';
 import CreatePost from '../components/Home/CreatePost';
 import Post from '../components/Home/Post';
+import { authPost_url } from '../constant/apiUrl';
 
-const home = () => {
+const home = ({ userData }) => {
   return (
     <div className='flex flex-row bg-gray-100 dark:bg-gray-900 overflow-hidden'>
       <section className='sm:w-2/3 w-full p-4 m-2 rounded-lg'>
         <CreatePost />
         {/* user post */}
         <section className='overflow-y-scroll h-96 mt-4'>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          {userData.posts &&
+            userData.posts.map((data) => <Post key={data._id} data={data} />)}
         </section>
       </section>
 
@@ -120,3 +113,17 @@ const home = () => {
 };
 
 export default home;
+
+// authPost_url;
+
+export async function getServerSideProps({ req }) {
+  const res = await axios.get(authPost_url, {
+    withCredentials: true,
+    headers: {
+      'Access-Control-Allow-Credentials': true,
+      Cookie: req?.headers?.cookie,
+    },
+  });
+  const data = await res.data;
+  return { props: { userData: data } };
+}

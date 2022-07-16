@@ -72,9 +72,9 @@ const Header = () => {
       className={
         navbar
           ? scrollDir == 'scrolling up'
-            ? 'sticky top-0 z-50 shadow-2xl bg-white'
+            ? 'sticky top-0 z-50 shadow-2xl bg-white dark:bg-gray-700'
             : 'hidden top-0 z-50'
-          : 'sticky top-0 z-50 bg-white'
+          : 'sticky top-0 z-50 bg-white dark:bg-gray-700'
       }
     >
       {/* {auth.loading ? (
@@ -136,26 +136,30 @@ const Header = () => {
             >
               <path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'></path>
             </svg>
-            <span className='ml-3 text-xl'>devbros</span>
+            <span className='ml-3 text-xl dark:text-white'>devbros</span>
           </a>
           {/* )} */}
 
           <nav className='md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center'>
             <Link href='/login'>
-              <a className='mr-4 hover:text-gray-900'>First Link</a>
+              <a className='mr-4 hover:text-gray-900 dark:text-gray-50'>
+                First Link
+              </a>
             </Link>
             <Link href='/signup'>
-              <a className='mr-4 hover:text-gray-900'>Second Link</a>
+              <a className='mr-4 hover:text-gray-900 dark:text-gray-50'>
+                Second Link
+              </a>
             </Link>
-            <a className='mr-4 hover:text-gray-900'>thirdlink</a>
-            <a className='mr-4 hover:text-gray-900'>Fourth Link</a>
+            <a className='mr-4 hover:text-gray-900 dark:text-gray-50'>thirdlink</a>
+            <a className='mr-4 hover:text-gray-900 dark:text-gray-50'>Fourth Link</a>
 
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
               {theme === 'dark' ? (
                 <svg
-                  className='h-4 w-4 text-dark mr-4  fill-current'
+                  className='h-4 w-4 mr-4 text-white fill-current'
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 512 512'
                 >

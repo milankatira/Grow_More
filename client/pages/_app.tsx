@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider attribute='class'>
     
-      {/* <Navbar /> */}
+      <Navbar />
       {/* <div className='flex bg-gray-300'> */}
       {/* <Sidebar /> */}
       <Component {...pageProps} />
