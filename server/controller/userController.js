@@ -11,14 +11,14 @@ dotenv.config({ path: '../config/config.env' });
 
 exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { userName, name, email, password, phone } = req.body;
-    const user = await User.create({
-      userName,
-      name,
-      email,
-      password,
-      phone,
-    });
-    return res.status(201).json({ message: Message('okk').created, user });
+  const user = await User.create({
+    userName,
+    name,
+    email,
+    password,
+    phone,
+  });
+  return res.status(201).json({ message: Message('User').created, user });
 });
 
 // Login Controller
@@ -36,6 +36,6 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
   if (!isPasswordMatch) {
     return next(new ErrorHandler('email or password is incorrect', 400));
   }
-  // sendToken(user, 200, res);
+  sendToken(user, 200, res);
   return res.status(201).json({ message: 'logged user successfully', user });
 });

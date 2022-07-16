@@ -8,4 +8,7 @@ exports.Message = (name) => ({
   deleted: {
     deleted: `${name} deleted successfully`,
   },
+  get: {
+    get: `get ${name} successfully`,
+  },
 });
