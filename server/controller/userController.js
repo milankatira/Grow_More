@@ -4,6 +4,7 @@ const catchAsyncError = require('../middleware/catchAsyncError');
 const ErrorHandler = require('../utils/errorhandler');
 const sendToken = require('../utils/jwtToken');
 const { Message } = require('../constant/Message');
+const { getTokenForEmailVarification } = require('../helpers/auth');
 
 dotenv.config({ path: '../config/config.env' });
 
@@ -18,7 +19,10 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
     password,
     phone,
   });
-  return res.status(201).json({ message: Message('User').created, user });
+  // const tokenForEmailVarification = await getTokenForEmailVarification({
+  //   createdUser: user._id,
+  // });
+  sendToken(user, 201, res);
 });
 
 // Login Controller
