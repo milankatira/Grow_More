@@ -5,19 +5,21 @@ import { ThemeProvider } from 'next-themes';
 // import Navbar from '../components/Navbar';
 import dynamic from 'next/dynamic';
 import Sidebar from '../components/common/layout/Sidebar';
+import { AuthProvider } from '../context/store/Auth';
 const Navbar = dynamic(() => import('../components/common/layout/Navbar'), {
   ssr: false,
 });
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider attribute='class'>
-    
+      <AuthProvider>
       <Navbar />
-      {/* <div className='flex bg-gray-300'> */}
-      {/* <Sidebar /> */}
-      <Component {...pageProps} />
-      {/* </div> */}
+     
+        <Component {...pageProps} />
+      </AuthProvider>
+
     </ThemeProvider>
   );
 }

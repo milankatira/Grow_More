@@ -3,7 +3,6 @@ import React from 'react';
 import CreatePost from '../components/Home/CreatePost';
 import Post from '../components/Home/Post';
 import { authPost_url } from '../constant/apiUrl';
-
 const home = ({ userData }) => {
   return (
     <div className='flex flex-row bg-gray-100 dark:bg-gray-900 overflow-hidden'>
