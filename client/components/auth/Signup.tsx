@@ -6,31 +6,26 @@ import { intialValue } from '../../constant/initialValue';
 import Textinput from '../common/design/Textinput';
 import ButtonField from '../common/design/ButtonField';
 import { Isignup } from '../../interface/form/Auth';
+import { SignupApi } from '../../api/Auth';
+import toast from 'react-hot-toast';
 const SignUp = () => {
-
   const onFormSubmit = async (data: Isignup) => {
     const packet = {
       email: data.email,
       password: data.password,
+      userName: data.userName,
+      phone: data.phone,
+      name: data.name,
     };
-    axios
-      .post('http://localhost:4000/api/register', { ...packet })
-      .then((res) => {
-        // toast.success(res?.data?.message);
-        // const serialized = cookie.serialize('token', res?.data?.token, {
-        //   httpOnly: false,
-        //   secure: process.env.MODE_ENV !== 'development',
-        //   sameSite: 'strict',
-        //   maxAge: 60 * 60 * 24 * 1, // 1 day
-        //   path: '/',
-        // });
-        // //  ("Set-Cookie", serialized);
-        // Router.push('/myprofile');
-      })
-      .catch((err) => {
-        console.log(err);
-        // toast.error(err?.response?.data?.message);
-      });
+
+    SignupApi(packet).then((res) => {
+     toast.success(res.data.message);
+    })
+    .catch((err) => {
+      toast.error("rr")
+      // toast.error(err.response.data.message);
+    })  
+    ;
   };
 
   return (

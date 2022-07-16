@@ -1,13 +1,11 @@
 import React from 'react';
-import CreatePost from '../components/Home/createPost';
+import CreatePost from '../components/Home/CreatePost';
 import Post from '../components/Home/Post';
 
 const home = () => {
   return (
     <div className='flex flex-row bg-gray-100 dark:bg-gray-900 overflow-hidden'>
-      <section className='sm:w-1/5 w-0'>mk</section>
-
-      <section className='sm:w-3/5 w-full p-4 m-2 rounded-lg'>
+      <section className='sm:w-2/3 w-full p-4 m-2 rounded-lg'>
         <CreatePost />
         {/* user post */}
         <section className='overflow-y-scroll h-96 mt-4'>
@@ -25,7 +23,7 @@ const home = () => {
         </section>
       </section>
 
-      <section className='sm:w-1/5 w-0'>
+      <section className='sm:w-1/3 w-0'>
         {/* notification */}
         <div className='mt-10 m-2 dark:bg-black bg-white rounded-2xl'>
           <h1 className='text-center font-bold'>Notifications</h1>

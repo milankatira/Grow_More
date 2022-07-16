@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { createPost } from '../../api/Post';
 
 const CreatePost = () => {
+  const [text, settext] = useState<string>('');
+
+  const CreatePostHandler = () => {
+    if (text == '') {
+      return toast.error('jnnnnn');
+    }
+    const packet = {
+      postText: text,
+      postType: 'text',
+    };
+    createPost(packet).then((res) => settext(''));
+  };
+
   return (
     <div className='bg-white dark:bg-black p-2 rounded-xl'>
       <div className='flex flex-row'>
@@ -15,6 +30,8 @@ const CreatePost = () => {
         <textarea
           name='mk'
           id=''
+          value={text}
+          onChange={(e) => settext(e.target.value)}
           placeholder='what`s up?'
           className='placeholder-gray-600 dark:placeholder-gray-300 p-4 ml-2 w-full rounded-lg'
           cols={20}
@@ -33,7 +50,10 @@ const CreatePost = () => {
           </svg>{' '}
           media
         </button>
-        <button className='p-1  dark:bg-blue-500  bg-gray-200 text-black dark:text-white rounded-md flex items-center pl-3'>
+        <button
+          onClick={CreatePostHandler}
+          className='p-1  dark:bg-blue-500  bg-gray-200 text-black dark:text-white rounded-md flex items-center pl-3'
+        >
           public
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -46,6 +66,6 @@ const CreatePost = () => {
       </div>
     </div>
   );
-}
+};
 
-export default CreatePost
+export default CreatePost;
