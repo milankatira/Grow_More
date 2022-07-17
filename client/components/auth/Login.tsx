@@ -9,22 +9,19 @@ import { LoginApi } from '../../api/Auth';
 import { toast } from 'react-hot-toast';
 import { setCookies } from 'cookies-next';
 import Router from 'next/router';
+import { useAuthcontext } from '../../context/store/Auth';
+
 const LoginScreen = () => {
+  const { auth, Auth_api } = useAuthcontext();
+
   const onFormSubmit = async (data: ILogin) => {
     const packet = {
       email: data.email,
       password: data.password,
     };
-    LoginApi(packet)
-      .then((res) => {
-        toast.success(res?.data?.message);
-        setCookies('token', res.data.token);
-        Router.push('/home');
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err?.response?.data?.message);
-      });
+
+    Auth_api.LoginUser(packet)
+     
   };
 
   return (

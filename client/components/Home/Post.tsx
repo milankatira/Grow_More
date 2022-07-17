@@ -1,13 +1,17 @@
 import React from 'react';
 import { Likepost, DeletePost } from '../../api/Post';
-
-export const likePost = (id: string) => {
-  Likepost(id);
-};
+import { usePostcontext } from '../../context/store/Post';
 
 const Post = ({ data }) => {
+const { PostData, Post_api } = usePostcontext();
   const userId = '62d292d9986237fa1716b205';
-  console.log(data.likes && data.likes.includes(userId), 'ggg');
+  const likePost = (id: string) => {
+    Likepost(id).then((res) => Post_api.MyPost());
+  };
+  
+  const DeletePostHandler=(id:string)=>{
+    DeletePost(id).then((res) => Post_api.MyPost());
+  }
   return (
     <>
       <div className='w-full mt-4 dark:bg-black bg-white p-2 rounded-lg'>
@@ -23,7 +27,7 @@ const Post = ({ data }) => {
             </h1>
             <div
               className='flex justify-end -mt-6 w-full'
-              onClick={() => DeletePost(data._id)}
+              onClick={() => DeletePostHandler(data._id)}
             >
               DELETE
             </div>
