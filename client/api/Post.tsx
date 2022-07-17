@@ -5,6 +5,7 @@ import {
   authPost_url,
   likePost_url,
   DeletePost_url,
+  deletelike_url,
 } from '../constant/apiUrl';
 axios.defaults.withCredentials = true;
 
@@ -32,6 +33,13 @@ export const Likepost = (id: string) =>
       throw err;
     });
 
+export const RemoveLike = (id: string) =>
+  axios
+    .put(deletelike_url(id))
+    .then((response) => response)
+    .catch((err) => {
+      throw err;
+    });
 
 export const DeletePost = (id: string) =>
   axios

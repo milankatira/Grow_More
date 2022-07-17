@@ -23,3 +23,6 @@ export const DeletePost_url = (postId: string) =>
 
 export const likePost_url = (postId: string) =>
   `${server_url}/api/likePost/${postId}`;
+
+export const deletelike_url = (postId: string) =>
+  `${server_url}/api/deletelike/${postId}`;
