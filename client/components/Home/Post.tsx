@@ -1,17 +1,21 @@
 import React from 'react';
-import { Likepost, DeletePost } from '../../api/Post';
+import { Likepost, DeletePost, RemoveLike } from '../../api/Post';
 import { usePostcontext } from '../../context/store/Post';
 
 const Post = ({ data }) => {
-const { PostData, Post_api } = usePostcontext();
+  const { PostData, Post_api } = usePostcontext();
   const userId = '62d292d9986237fa1716b205';
   const likePost = (id: string) => {
     Likepost(id).then((res) => Post_api.MyPost());
   };
-  
-  const DeletePostHandler=(id:string)=>{
+
+  const removelike = (id: string) => {
+    RemoveLike(id).then((res) => Post_api.MyPost());
+  };
+
+  const DeletePostHandler = (id: string) => {
     DeletePost(id).then((res) => Post_api.MyPost());
-  }
+  };
   return (
     <>
       <div className='w-full mt-4 dark:bg-black bg-white p-2 rounded-lg'>
@@ -38,6 +42,7 @@ const { PostData, Post_api } = usePostcontext();
               {data.likes &&
               data.likes.filter((e: any) => e.userId == userId).length > 0 ? (
                 <svg
+                  onClick={() => removelike(data._id)}
                   className='h-4 w-4 text-red-700 mr-4 fill-current'
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 512 512'

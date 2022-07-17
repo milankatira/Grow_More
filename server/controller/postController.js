@@ -58,5 +58,8 @@ exports.likePost = catchAsyncError(async (req, res, next) => {
 // Dislike Post
 
 exports.dislikePost = catchAsyncError(async (req, res, next) => {
-  
+  const post = await Post.findById(req.params.postId);
+  post.likes.pop({ userId: req.user.id, Date: Date.now() });
+  await post.save();
+  return res.status(200).json({ message: Message('Post').like, post });
 });
