@@ -8,7 +8,7 @@ import { useAuthcontext } from '../../../context/store/Auth';
 
 const Header = () => {
   const { auth, Auth_api } = useAuthcontext();
-  console.log(auth.authStatus.user.name, 'auth');
+  console.log(auth?.authStatus?.user?.name, 'auth');
   const [navbar, setnavbar] = useState<boolean>(false);
   const { theme, setTheme } = useTheme();
 
@@ -89,7 +89,7 @@ const Header = () => {
             </svg>
             <span className='ml-3 text-xl dark:text-white'>
               {' '}
-              {auth.authStatus.user.name}
+              {auth?.authStatus?.user?.name}
             </span>
           </a>
 

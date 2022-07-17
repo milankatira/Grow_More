@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { createPost } from '../../api/Post';
+import { usePostcontext } from '../../context/store/Post';
 
 const CreatePost = () => {
   const [text, settext] = useState<string>('');
+  const { PostData, Post_api } = usePostcontext();
 
   const CreatePostHandler = () => {
     if (text == '') {
@@ -13,7 +15,10 @@ const CreatePost = () => {
       postText: text,
       postType: 'text',
     };
-    createPost(packet).then((res) => settext(''));
+    createPost(packet).then(
+      (res) => settext(''),
+      Post_api.MyPost(),
+    );
   };
 
   return (
