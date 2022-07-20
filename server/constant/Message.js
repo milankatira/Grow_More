@@ -11,4 +11,10 @@ exports.Message = (name) => ({
   get: {
     get: `get ${name} successfully`,
   },
+  like: {
+    like: `liked ${name} successfully`,
+  },
+  dislike: {
+    dislike: `disliked ${name} successfully`,
+  },
 });

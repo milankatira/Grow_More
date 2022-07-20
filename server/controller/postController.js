@@ -49,6 +49,7 @@ exports.likePost = catchAsyncError(async (req, res, next) => {
   // if (!post) {
   //   return next(new ErrorHandler('No post found', 404));
   // }
+
   if (post.likes.includes(req.user.id)) {
     return next(new ErrorHandler('You already liked this post', 400));
   }
@@ -60,6 +61,18 @@ exports.likePost = catchAsyncError(async (req, res, next) => {
 // Dislike Post
 
 exports.dislikePost = catchAsyncError(async (req, res, next) => {
-  
-})
+  // if (!req.params.postId) {
+  //   return next(new ErrorHandler('please provide postId', 400));
+  // }
+  const post = await Post.findById(req.params.postId);
+  // if (!post) {
+  //   return next(new ErrorHandler('No post found', 404));
+  // }
+  if (!post.likes.includes(req.user.id)) {
+    return next(new ErrorHandler('You already disliked this post', 400));
+  }
+  post.likes.pull(req.user.id);
+  await post.save();
+  return res.status(200).json({ message: Message('Post').dislike, post });
+});
 

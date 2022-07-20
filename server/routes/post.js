@@ -4,6 +4,7 @@ const {
   getPostByAuthId,
   deletePost,
   likePost,
+  dislikePost,
 } = require('../controller/postController');
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.route('/postCreate').post(isAuthenticUser, createPost);
 router.route('/authPost').get(isAuthenticUser, getPostByAuthId);
 router.route('/deletePost/:postId').delete(isAuthenticUser, deletePost);
 router.route('/likePost/:postId').put(isAuthenticUser, likePost);
+router.route('/dislikePost/:postId').put(isAuthenticUser, dislikePost);
 
 module.exports = router;
