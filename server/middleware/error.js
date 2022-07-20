@@ -1,7 +1,6 @@
 const ErrorHandler = require('../utils/errorhandler');
 
 module.exports = (err, req, res, next) => {
-  console.log(err.code, 'RRRRR');
   err.statusCode = err.statusCode || 500;
   err.message = err.message || 'internal server error';
   //TODO mongodb error

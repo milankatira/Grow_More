@@ -5,30 +5,23 @@ import { intialValue } from '../../constant/initialValue';
 import Textinput from '../common/design/Textinput';
 import ButtonField from '../common/design/ButtonField';
 import { ILogin } from '../../interface/form/Auth';
-import { LoginApi } from '../../api/Api';
+import { LoginApi } from '../../api/Auth';
+import { toast } from 'react-hot-toast';
+import { setCookies } from 'cookies-next';
+import Router from 'next/router';
+import { useAuthcontext } from '../../context/store/Auth';
+
 const LoginScreen = () => {
+  const { auth, Auth_api } = useAuthcontext();
+
   const onFormSubmit = async (data: ILogin) => {
     const packet = {
       email: data.email,
       password: data.password,
     };
-    LoginApi(packet)
-      .then((res) => {
-        // toast.success(res?.data?.message);
-        // const serialized = cookie.serialize('token', res?.data?.token, {
-        //   httpOnly: false,
-        //   secure: process.env.MODE_ENV !== 'development',
-        //   sameSite: 'strict',
-        //   maxAge: 60 * 60 * 24 * 1, // 1 day
-        //   path: '/',
-        // });
-        // //  ("Set-Cookie", serialized);
-        // Router.push('/myprofile');
-      })
-      .catch((err) => {
-        console.log(err);
-        // toast.error(err?.response?.data?.message);
-      });
+
+    Auth_api.LoginUser(packet)
+     
   };
 
   return (
