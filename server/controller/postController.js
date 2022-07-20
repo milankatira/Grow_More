@@ -44,9 +44,8 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
 // like Post
 
 exports.likePost = catchAsyncError(async (req, res, next) => {
-  
   const post = await Post.findById(req.params.postId);
-  
+
   if (post.likes.filter((e) => e.userId == req.user.id).length > 0) {
     return next(new ErrorHandler('You already liked this post', 400));
   }
