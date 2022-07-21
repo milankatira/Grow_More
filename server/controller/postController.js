@@ -24,7 +24,11 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 // get post by authId
 
 exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
-  const posts = await Post.find({ postedBy: req.user.id });
+  
+  const posts = await Post.find({ postedBy: req.user.id }).sort({
+    createdAt: '-1',
+  });
+
   if (!posts) {
     return next(new ErrorHandler('No post found', 404));
   }
@@ -44,9 +48,8 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
 // like Post
 
 exports.likePost = catchAsyncError(async (req, res, next) => {
-  
   const post = await Post.findById(req.params.postId);
-  
+
   if (post.likes.filter((e) => e.userId == req.user.id).length > 0) {
     return next(new ErrorHandler('You already liked this post', 400));
   }
