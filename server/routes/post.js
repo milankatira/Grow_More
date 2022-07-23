@@ -5,7 +5,7 @@ const {
   deletePost,
   dislikePost,
   likePost,
-  dislikePost,
+  // dislikePost,
 } = require('../controller/postController');
 
 const router = express.Router();
