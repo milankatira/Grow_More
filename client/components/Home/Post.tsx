@@ -46,7 +46,7 @@ const Post = ({ data }) => {
 
             <div className='flex flex-row items-center'>
               {data.likes &&
-              data.likes.filter((e: any) => e.userId == userId).length > 0 ? (
+              data.likes.filter((e: any) => e.userId._id == userId).length > 0 ? (
                 <svg
                   onClick={() => removelike(data._id)}
                   className='h-4 w-4 text-red-700 mr-4 fill-current'
@@ -66,6 +66,21 @@ const Post = ({ data }) => {
                 </svg>
               )}
               <p className='ml-2 font-bold'>{data.likes.length} Like</p>
+
+              <p className='ml-4'>
+                {' '}
+                By{' '}
+                {data.likes.length > 1
+                  ? data?.likes[0]?.userId.userName && `others`
+                  : data?.likes[0]?.userId.userName}
+              </p>
+            </div>
+            <div className='flex flex-row items-center'>
+              <p>{data?.postComments[0]?.comment?.text}</p>
+              <p className='ml-4'>
+                {' '}
+                By {data?.postComments[0]?.commentBy?.userName}
+              </p>
             </div>
 
             <div className='flex flex-row rounded-3xl items-center p-2 w-full'>

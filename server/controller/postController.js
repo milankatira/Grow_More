@@ -2,6 +2,7 @@ const catchAsyncError = require('../middleware/catchAsyncError');
 const ErrorHandler = require('../utils/errorhandler');
 const { Message } = require('../constant/Message');
 const Post = require('../models/post');
+const user = require('../models/user');
 const mongoose = require('mongoose');
 const Types = mongoose.Types;
 const ObjectId = Types.ObjectId;
@@ -25,7 +26,6 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 // get post by authId
 
 exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
-
   const posts = await Post.aggregate([
     {
       $match: {
@@ -43,16 +43,35 @@ exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
     },
     {
       $project: {
-        likes: 1, // 0 not allowed, // 1 allowed
-        _id: 1,
+        likes: { userId: 1 }, // 0 not allowed, // 1 allowed
         postText: 1,
+        postedBy: 1,
         usersLikePost: 1,
         postMedia: 1,
         updatedAt: 1,
-        postComments: { comment: 1 },
+        postComments: { comment: 1, commentBy: 1 },
       },
     },
   ]);
+
+  await Post.populate(posts, {
+    path: 'likes.userId',
+    model: user,
+    select: 'userName',
+  });
+
+  await Post.populate(posts, {
+    path: 'postComments.commentBy',
+    model: user,
+    select: 'userName',
+  });
+
+  await Post.populate(posts, {
+    path: 'postedBy',
+    model: user,
+    select: 'userName',
+  });
+
   if (!posts) {
     return next(new ErrorHandler('No post found', 404));
   }
