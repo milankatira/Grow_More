@@ -3,7 +3,8 @@ const ErrorHandler = require('../utils/errorhandler');
 const { Message } = require('../constant/Message');
 const Post = require('../models/post');
 const mongoose = require('mongoose');
-const { ObjectId } = mongoose.Schema.Types;
+const Types = mongoose.Types;
+const ObjectId = Types.ObjectId;
 
 // post create logic
 
@@ -24,7 +25,34 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 // get post by authId
 
 exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
-  const posts = await Post.find({ postedBy: req.user.id });
+  const posts = await Post.aggregate([
+    {
+      $match: {
+        postedBy: ObjectId(req.user.id),
+        // _id: 1,
+      },
+    },
+    {
+      $lookup: {
+        from: 'comments', // table name
+        localField: '_id', // field name in the current collection
+        foreignField: 'postId', // field name in the other collection
+        as: 'postComments',
+        pipeline: [{ $sort: { createdAt: -1 } }, { $limit: 1 }],
+      }, // -1 for descending order, 1 for ascending order
+    },
+    {
+      $project: {
+        likes: 1, // 0 not allowed, // 1 allowed
+        _id: 1,
+        postText: 1,
+        usersLikePost: 1,
+        postMedia: 1,
+        updatedAt: 1,
+        postComments: { comment: 1 },
+      },
+    },
+  ]);
   if (!posts) {
     return next(new ErrorHandler('No post found', 404));
   }
