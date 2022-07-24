@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { createComments, getComments } from '../../api/comments';
 import { Likepost, DeletePost, RemoveLike } from '../../api/Post';
+import { useAuthcontext } from '../../context/store/Auth';
 import { usePostcontext } from '../../context/store/Post';
 
 const Post = ({ data }) => {
   const { PostData, Post_api } = usePostcontext();
+  const { auth, Auth_api } = useAuthcontext();
+  console.log(auth?.authStatus?.user?._id, 'PostData');
+
+  const [comments, setcomments] = useState('');
   const userId = '62d292d9986237fa1716b205';
   const likePost = (id: string) => {
     Likepost(id).then((res) => Post_api.MyPost());
@@ -15,6 +21,10 @@ const Post = ({ data }) => {
 
   const DeletePostHandler = (id: string) => {
     DeletePost(id).then((res) => Post_api.MyPost());
+  };
+
+  const createCommentsHandler = (id: string, comment: string) => {
+    createComments(id, { comment: { text: comment } });
   };
   return (
     <>
@@ -40,7 +50,9 @@ const Post = ({ data }) => {
 
             <div className='flex flex-row items-center'>
               {data.likes &&
-              data.likes.filter((e: any) => e.userId == userId).length > 0 ? (
+              data.likes.filter(
+                (e: any) => e.userId._id == auth?.authStatus?.user?._id,
+              ).length > 0 ? (
                 <svg
                   onClick={() => removelike(data._id)}
                   className='h-4 w-4 text-red-700 mr-4 fill-current'
@@ -59,7 +71,23 @@ const Post = ({ data }) => {
                   <path d='M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z' />
                 </svg>
               )}
-              <p className='ml-2 font-bold'>{data.likes.length} Like</p>
+              <p className='ml-2 font-bold'>{data?.likes?.length} Like</p>
+              {data?.likes?.length > 0 && (
+                <p className='ml-4'>
+                  {' '}
+                  By{' '}
+                  {data?.likes?.length > 1
+                    ? data?.likes[0]?.userId?.userName + ` & others`
+                    : data?.likes[0]?.userId?.userName}
+                </p>
+              )}
+            </div>
+            <div className='flex flex-row items-center'>
+              <p>{data?.postComments[0]?.comment?.text}</p>
+              <p className='ml-4'>
+                {' '}
+                By {data?.postComments[0]?.commentBy?.userName}
+              </p>
             </div>
 
             <div className='flex flex-row rounded-3xl items-center p-2 w-full'>
@@ -77,9 +105,15 @@ const Post = ({ data }) => {
                 <path d='M152 120c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48S178.5 120 152 120zM447.1 32h-384C28.65 32-.0091 60.65-.0091 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96C511.1 60.65 483.3 32 447.1 32zM463.1 409.3l-136.8-185.9C323.8 218.8 318.1 216 312 216c-6.113 0-11.82 2.768-15.21 7.379l-106.6 144.1l-37.09-46.1c-3.441-4.279-8.934-6.809-14.77-6.809c-5.842 0-11.33 2.529-14.78 6.809l-75.52 93.81c0-.0293 0 .0293 0 0L47.99 96c0-8.822 7.178-16 16-16h384c8.822 0 16 7.178 16 16V409.3z' />
               </svg>
 
-              <input type='text' className='ml-2 p-2 rounded-lg w-full' />
+              <input
+                value={comments}
+                onChange={(e) => setcomments(e.target.value)}
+                type='text'
+                className='ml-2 p-2 rounded-lg w-full'
+              />
 
               <svg
+                onClick={() => createCommentsHandler(data._id, comments)}
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 512 512'
                 className='h-8 w-8 text-black dark:text-white mr-4 fill-current ml-2'
