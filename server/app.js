@@ -39,7 +39,7 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
-app.use('/api', [routes.post, routes.user, routes.comment]);
+app.use('/api', [routes.post, routes.user, routes.comment, routes.like]);
 app.use(errorMiddleware);
 
 module.exports = app;
