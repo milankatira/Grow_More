@@ -29,8 +29,9 @@ exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
   const posts = await Post.aggregate([
     {
       $match: {
-        postedBy: ObjectId(req.user.id),
+        postedBy: { $ne: ObjectId(req.user.id) },
       },
+      // {field: {$ne: value}}
     },
     {
       $lookup: {
@@ -70,6 +71,12 @@ exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
     path: 'postedBy',
     model: user,
     select: 'userName',
+  });
+
+  posts.forEach((d) => {
+    if (d.likes && d.likes[0].userId._id == req.user.id) {
+      d.likebyMe = true;
+    }
   });
 
   if (!posts) {
