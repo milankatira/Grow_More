@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import { createComments, getComments } from '../../api/comments';
-import { Likepost, DeletePost, RemoveLike } from '../../api/Post';
+import { DeletePost } from '../../api/Post';
+import { likePost, dislikePost } from '../../api/Like';
 import { useAuthcontext } from '../../context/store/Auth';
 import { usePostcontext } from '../../context/store/Post';
 import Modal from '../common/design/ModalField';
+import Like from '../common/model/Like';
 
 const Post = ({ data }) => {
   const { PostData, Post_api } = usePostcontext();
   const { auth, Auth_api } = useAuthcontext();
   const [showModal, setShowModal] = useState(false);
+  const [showLikeModal, setshowLikeModal] = useState(false);
   const [postId, setpostId] = useState('');
+  const [post_id, setpost_id] = useState('');
   console.log(auth?.authStatus?.user?._id, 'PostData');
 
   const [comments, setcomments] = useState('');
-  const userId = '62d292d9986237fa1716b205';
-  const likePost = (id: string) => {
-    Likepost(id).then((res) => Post_api.MyPost());
-  };
-
-  const removelike = (id: string) => {
-    RemoveLike(id).then((res) => Post_api.MyPost());
-  };
 
   const DeletePostHandler = (id: string) => {
     DeletePost(id).then((res) => Post_api.MyPost());
@@ -52,12 +48,11 @@ const Post = ({ data }) => {
             <p>{data.postText}</p>
 
             <div className='flex flex-row items-center'>
-              {data.likes &&
-              data.likes.filter(
-                (e: any) => e.userId._id == auth?.authStatus?.user?._id,
-              ).length > 0 ? (
+              {data.likebyMe ? (
                 <svg
-                  onClick={() => removelike(data._id)}
+                  onClick={() =>
+                    dislikePost(data._id).then((res) => Post_api.MyPost())
+                  }
                   className='h-4 w-4 text-red-700 mr-4 fill-current'
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 512 512'
@@ -66,7 +61,9 @@ const Post = ({ data }) => {
                 </svg>
               ) : (
                 <svg
-                  onClick={() => likePost(data._id)}
+                  onClick={() =>
+                    likePost(data._id).then((res) => Post_api.MyPost())
+                  }
                   className='h-4 w-4 text-black dark:text-white mr-4 fill-current'
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 512 512'
@@ -79,9 +76,9 @@ const Post = ({ data }) => {
                 <p className='ml-4'>
                   {' '}
                   By{' '}
-                  {data?.likes?.length > 1
+                  {/* {data?.likes?.length > 1
                     ? data?.likes[0]?.userId?.userName + ` & others`
-                    : data?.likes[0]?.userId?.userName}
+                    : data?.likes[0]?.userId?.userName} */}
                 </p>
               )}
             </div>
@@ -96,8 +93,16 @@ const Post = ({ data }) => {
                   setShowModal(true), setpostId(data);
                 }}
               >
-                All Likes
+                All comments
               </button>
+              <button
+                onClick={() => {
+                  setshowLikeModal(true), setpost_id(data._id);
+                }}
+              >
+                All likes
+              </button>
+              {/* //setshowLikeModal */}
             </div>
 
             <div className='flex flex-row rounded-3xl items-center p-2 w-full'>
@@ -132,6 +137,12 @@ const Post = ({ data }) => {
                 setShowModal={setShowModal}
                 showModal={showModal}
                 postId={postId}
+              />
+
+              <Like
+                setShowModal={setshowLikeModal}
+                showModal={showLikeModal}
+                postId={post_id}
               />
             </div>
           </div>
