@@ -69,24 +69,24 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
   return res.status(200).json({ message: Message('Post').deleted, post });
 });
 
-// like Post
+// // like Post
 
-exports.likePost = catchAsyncError(async (req, res, next) => {
-  const post = await Post.findById(req.params.postId);
+// exports.likePost = catchAsyncError(async (req, res, next) => {
+//   const post = await Post.findById(req.params.postId);
 
-  if (post.likes.filter((e) => e.userId == req.user.id).length > 0) {
-    return next(new ErrorHandler('You already liked this post', 400));
-  }
-  post.likes.push({ userId: req.user.id, Date: Date.now() });
-  await post.save();
-  return res.status(200).json({ message: Message('Post').like, post });
-});
+//   if (post.likes.filter((e) => e.userId == req.user.id).length > 0) {
+//     return next(new ErrorHandler('You already liked this post', 400));
+//   }
+//   post.likes.push({ userId: req.user.id, Date: Date.now() });
+//   await post.save();
+//   return res.status(200).json({ message: Message('Post').like, post });
+// });
 
-// Dislike Post
+// // Dislike Post
 
-exports.dislikePost = catchAsyncError(async (req, res, next) => {
-  const post = await Post.findById(req.params.postId);
-  post.likes.pop({ userId: req.user.id, Date: Date.now() });
-  await post.save();
-  return res.status(200).json({ message: Message('Post').like, post });
-});
+// exports.dislikePost = catchAsyncError(async (req, res, next) => {
+//   const post = await Post.findById(req.params.postId);
+//   post.likes.pop({ userId: req.user.id, Date: Date.now() });
+//   await post.save();
+//   return res.status(200).json({ message: Message('Post').like, post });
+// });
