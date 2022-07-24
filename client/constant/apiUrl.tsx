@@ -26,3 +26,14 @@ export const likePost_url = (postId: string) =>
 
 export const deletelike_url = (postId: string) =>
   `${server_url}/api/deletelike/${postId}`;
+
+//TODO COMMENTS
+export const comment_url = (postId: string) => `${server_url}/api/comment/${postId}`;
+
+export const like_comment_url = (postId: string) =>
+  `${server_url}/api/likeComment/${postId}`;
+
+export const dislike_comment_url = (postId: string) =>
+  `${server_url}/api/dislikeComment/${postId}`;
+
+
