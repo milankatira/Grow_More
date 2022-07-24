@@ -27,3 +27,18 @@ exports.followingUserProfile = catchAsyncError(async (req, res, next) => {
     newFollowingUser,
   });
 });
+
+
+exports.unfollowUserProfile = catchAsyncError(async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  const followingUsers = await followingUser.findOneAndDelete({
+    userId,
+    followingUserId: id,
+  });
+ 
+  res.status(200).json({
+    message: Message('FollowingUser').get,
+    followingUsers,
+  });
+});
