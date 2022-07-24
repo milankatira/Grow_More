@@ -39,3 +39,13 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
   }
   sendToken(user, 200, res);
 });
+
+// get Users
+
+exports.getAllUsers = catchAsyncError(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    message: Message('Users').get,
+    users,
+  });
+});
