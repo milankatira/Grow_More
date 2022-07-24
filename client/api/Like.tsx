@@ -1,31 +1,28 @@
 import axios from 'axios';
 
-import {
-  createPost_url,
-  authPost_url,
-  DeletePost_url,
-} from '../constant/apiUrl';
+import { like_url } from '../constant/apiUrl';
+
 axios.defaults.withCredentials = true;
 
-export const createPost = (packet: any) =>
+export const likePost = (id: string) =>
   axios
-    .post(createPost_url, packet)
+    .post(like_url(id))
     .then((response) => response)
     .catch((err) => {
       throw err;
     });
 
-export const authPost = () =>
+export const dislikePost = (id: string) =>
   axios
-    .get(authPost_url)
+    .delete(like_url(id))
     .then((response) => response)
     .catch((err) => {
       throw err;
     });
 
-export const DeletePost = (id: string) =>
+export const getAlllikes = (id: string) =>
   axios
-    .delete(DeletePost_url(id))
+    .get(like_url(id))
     .then((response) => response)
     .catch((err) => {
       throw err;
