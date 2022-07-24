@@ -1,6 +1,8 @@
 import React from 'react';
 
-const User = ({ comments }) => {
+const User = ({ comments }:({
+  comments:any
+})) => {
   console.log(comments,"comments")
   return (
     <div className=''>
