@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { getAlllikes } from '../../../api/Like';
 import ButtonField from '../design/ButtonField';
 
-export default function Like({ showModal, setShowModal, postId }) {
+export default function Like({
+  showModal,
+  setShowModal,
+  postId,
+}: {
+  showModal: boolean;
+  setShowModal: (arg: boolean) => void;
+  postId: string;
+}) {
   const [Likes, setLike] = useState([]);
   useEffect(() => {
     showModal && getAlllikes(postId).then((res) => setLike(res.data.likes));
@@ -33,7 +41,7 @@ export default function Like({ showModal, setShowModal, postId }) {
                 </div>
                 <div className='relative p-6 flex flex-row w-full items-center'>
                   <div className='flex flex-row justify-between w-full border-gray-200 border  rounded-lg'>
-                    {Likes.map((d) => {
+                    {Likes.map((d):any => {
                       return (
                         <>
                           <div className='w-full mt-2 h-full  flex items-center  p-2'>
@@ -43,8 +51,7 @@ export default function Like({ showModal, setShowModal, postId }) {
                               src='https://dummyimage.com/80x80'
                             />
                             <div className='flex-grow'>
-                              <h2 className='text-gray-900 title-font font-medium'>
-                              </h2>
+                              <h2 className='text-gray-900 title-font font-medium'></h2>
                               <p className='text-gray-500'>
                                 {d?.userId?.userName}
                               </p>

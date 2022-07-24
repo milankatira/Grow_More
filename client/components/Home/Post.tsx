@@ -8,13 +8,11 @@ import Modal from '../common/design/ModalField';
 import Like from '../common/model/Like';
 
 const Post = ({ data }) => {
-  const { PostData, Post_api } = usePostcontext();
-  const { auth, Auth_api } = useAuthcontext();
-  const [showModal, setShowModal] = useState(false);
-  const [showLikeModal, setshowLikeModal] = useState(false);
+  const { Post_api } = usePostcontext();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showLikeModal, setshowLikeModal] = useState<boolean>(false);
   const [postId, setpostId] = useState('');
   const [post_id, setpost_id] = useState('');
-  console.log(auth?.authStatus?.user?._id, 'PostData');
 
   const [comments, setcomments] = useState('');
 
