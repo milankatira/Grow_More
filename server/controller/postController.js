@@ -74,7 +74,7 @@ exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
   });
 
   posts.forEach((d) => {
-    if (d.likes && d.likes[0].userId._id == req.user.id) {
+    if (d.likes && d.likes.filter(d=>d.userId._id == req.user.id)) {
       d.likebyMe = true;
     }
   });

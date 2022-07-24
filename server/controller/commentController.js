@@ -2,6 +2,7 @@ const catchAsyncError = require('../middleware/catchAsyncError');
 const ErrorHandler = require('../utils/errorhandler');
 const { Message } = require('../constant/Message');
 const Comment = require('../models/comment');
+const user = require('../models/user');
 
 exports.createComment = catchAsyncError(async (req, res, next) => {
   const { comment } = req.body;
@@ -19,7 +20,12 @@ exports.createComment = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getCommentByPostId = catchAsyncError(async (req, res, next) => {
-  const comments = await Comment.find({ postId: req.params.postId });
+  const comments = await Comment.find({ postId: req.params.postId }).populate({
+    path: 'commentBy',
+    model: user,
+    select: 'userName',
+  });
+
   if (!comments) {
     return next(new ErrorHandler('No comment found', 404));
   }
