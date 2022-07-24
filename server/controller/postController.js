@@ -3,6 +3,7 @@ const ErrorHandler = require('../utils/errorhandler');
 const { Message } = require('../constant/Message');
 const Post = require('../models/post');
 const user = require('../models/user');
+const Like = require('../models/likes');
 const mongoose = require('mongoose');
 const Types = mongoose.Types;
 const ObjectId = Types.ObjectId;
@@ -26,7 +27,7 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 // get post by authId
 
 exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
-  const posts = await Post.aggregate([
+  let posts = await Post.aggregate([
     {
       $match: {
         postedBy: { $ne: ObjectId(req.user.id) },
@@ -44,23 +45,27 @@ exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
     },
     {
       $project: {
-        likes: { userId: 1 }, // 0 not allowed, // 1 allowed
         postText: 1,
         postedBy: 1,
-        usersLikePost: 1,
         postMedia: 1,
         updatedAt: 1,
         postComments: { comment: 1, commentBy: 1 },
       },
     },
   ]);
+  const likeMaper = async () => {
+    posts.forEach(async (d) => {
+      const likes = await Like.find({
+        postId: d._id,
+        userId: req.user.id,
+      });
 
-  await Post.populate(posts, {
-    path: 'likes.userId',
-    model: user,
-    select: 'userName',
-  });
-
+      if (likes.length > 0) {
+        d.likebyMe = true;
+      }
+    });
+  };
+  await likeMaper();
   await Post.populate(posts, {
     path: 'postComments.commentBy',
     model: user,
@@ -73,15 +78,10 @@ exports.getPostByAuthId = catchAsyncError(async (req, res, next) => {
     select: 'userName',
   });
 
-  posts.forEach((d) => {
-    if (d.likes && d.likes.filter(d=>d.userId._id == req.user.id)) {
-      d.likebyMe = true;
-    }
-  });
-
   if (!posts) {
     return next(new ErrorHandler('No post found', 404));
   }
+
   return res.status(200).json({ message: Message('Post').get, posts });
 });
 

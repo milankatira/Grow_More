@@ -21,14 +21,9 @@ export const authPost_url = `${server_url}/api/authPost`;
 export const DeletePost_url = (postId: string) =>
   `${server_url}/api/deletePost/${postId}`;
 
-export const likePost_url = (postId: string) =>
-  `${server_url}/api/likePost/${postId}`;
-
-export const deletelike_url = (postId: string) =>
-  `${server_url}/api/deletelike/${postId}`;
-
 //TODO COMMENTS
-export const comment_url = (postId: string) => `${server_url}/api/comment/${postId}`;
+export const comment_url = (postId: string) =>
+  `${server_url}/api/comment/${postId}`;
 
 export const like_comment_url = (postId: string) =>
   `${server_url}/api/likeComment/${postId}`;
@@ -36,4 +31,6 @@ export const like_comment_url = (postId: string) =>
 export const dislike_comment_url = (postId: string) =>
   `${server_url}/api/dislikeComment/${postId}`;
 
-
+//TODO like
+export const like_url = (postId: string) =>
+  `${server_url}/api/likePost/${postId}`;
