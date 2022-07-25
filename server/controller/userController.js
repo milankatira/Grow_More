@@ -44,3 +44,12 @@ exports.Myprofile = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   return res.status(200).json({ message: Message('user').get, user });
 });
+
+// get Users
+exports.getAllUsers = catchAsyncError(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    message: Message('Users').get,
+    users,
+  });
+});

@@ -3,7 +3,8 @@ const {
   registerUser,
   loginUser,
   Myprofile,
-} = require('../controller/userController');
+  getAllUsers,
+} = require("../controller/userController");
 
 const router = express.Router();
 const { isAuthenticUser } = require('../middleware/auth');
@@ -12,4 +13,8 @@ const { isAuthenticUser } = require('../middleware/auth');
 router.route("/register").post(registerUser);
 router.route("/signin").post(loginUser);
 router.route('/myProfile').get(isAuthenticUser, Myprofile);
+
+// get all users
+router.route('/getusers').get(getAllUsers);
+
 module.exports = router;
