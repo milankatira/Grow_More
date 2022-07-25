@@ -10,6 +10,8 @@ export const logout_url = `${server_url}/api/logout`;
 
 export const forgot_password_url = `${server_url}/api/forgot`;
 
+export const Auth_user=`${server_url}/api/myProfile`;
+
 export const reset_password_url = (token: string) =>
   `${server_url}/api/reset/:${token}`;
 

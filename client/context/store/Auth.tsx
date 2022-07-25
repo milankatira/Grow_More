@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useContext } from 'react';
 
 import Auth from '../reducer/Auth';
 
-import {LoginApi} from '../../api/Auth'
+import {AuthUserApi, LoginApi} from '../../api/Auth'
 
 import { authStatusSuccess, setLoading } from '../actions/Auth';
 
@@ -40,9 +40,20 @@ function AuthProvider(props) {
       });
   };
 
+  const AuthUser=()=>{
+    dispatch(setLoading(true));
+    AuthUserApi().then((res) => {
+      dispatch(setLoading(false));
+        Router.push('/home');
+      dispatch(authStatusSuccess(res.data));
+    }).catch((err) => {
+      dispatch(setLoading(false));
+    });
+  }
+
   const Auth_api = {
-    // AuthStatus,
     LoginUser,
+    AuthUser,
   };
 
   const authData = { auth, dispatch, Auth_api };

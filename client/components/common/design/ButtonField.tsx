@@ -7,7 +7,7 @@ const ButtonField: React.FC<ButtonFieldProps> = ({ text, type, onClick }) => {
     <button
       type={type}
       onClick={onClick}
-      className='bg-gray-700 active:bg-blue-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150'
+      className='bg-gray-700 dark:bg-blue-600 active:bg-blue-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150'
     >
       {text}
     </button>
