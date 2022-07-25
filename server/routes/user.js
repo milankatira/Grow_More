@@ -15,6 +15,6 @@ router.route("/signin").post(loginUser);
 router.route('/myProfile').get(isAuthenticUser, Myprofile);
 
 // get all users
-router.route('/getusers').get(getAllUsers);
+router.route('/getusers').get(isAuthenticUser,getAllUsers);
 
 module.exports = router;

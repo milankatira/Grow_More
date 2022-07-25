@@ -36,3 +36,8 @@ export const dislike_comment_url = (postId: string) =>
 //TODO like
 export const like_url = (postId: string) =>
   `${server_url}/api/likePost/${postId}`;
+
+
+//TODO SuggestedUsers
+
+export const suggestedUsers_url = `${server_url}/api/getusers`;
