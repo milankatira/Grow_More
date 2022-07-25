@@ -25,7 +25,7 @@ export default function Like({
             onClick={() => setShowModal(false)}
           >
             <div className='relative w-full my-6 mx-auto max-w-3xl'>
-              <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none'>
+              <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-black outline-none focus:outline-none'>
                 <div className='flex items-start justify-between p-5 border-b'>
                   <h3 className='text-base text-blue-500 font-semibold'>
                     All likes
@@ -58,7 +58,7 @@ export default function Like({
                             </div>
                           </div>
 
-                          <div className='mt-2 flex items-center'>
+                          <div className='mr-2 flex items-center'>
                             <ButtonField text='follow' />
                           </div>
                         </>
@@ -75,7 +75,7 @@ export default function Like({
                     Close
                   </button>
                   <button
-                    className='bg-emerald-500 text-white bg-green-400 active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                    className='bg-emerald-500 text-white bg-green-400 dark:text-black active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
                     type='button'
                     onClick={() => setShowModal(false)}
                   >

@@ -10,6 +10,8 @@ export const logout_url = `${server_url}/api/logout`;
 
 export const forgot_password_url = `${server_url}/api/forgot`;
 
+export const Auth_user=`${server_url}/api/myProfile`;
+
 export const reset_password_url = (token: string) =>
   `${server_url}/api/reset/:${token}`;
 
@@ -34,3 +36,8 @@ export const dislike_comment_url = (postId: string) =>
 //TODO like
 export const like_url = (postId: string) =>
   `${server_url}/api/likePost/${postId}`;
+
+
+//TODO SuggestedUsers
+
+export const suggestedUsers_url = `${server_url}/api/getusers`;

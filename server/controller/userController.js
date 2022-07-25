@@ -5,7 +5,6 @@ const ErrorHandler = require('../utils/errorhandler');
 const sendToken = require('../utils/jwtToken');
 const { Message } = require('../constant/Message');
 const { getTokenForEmailVarification } = require('../helpers/auth');
-
 dotenv.config({ path: '../config/config.env' });
 
 // signUp Controller
@@ -40,10 +39,14 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// get Users
+exports.Myprofile = catchAsyncError(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  return res.status(200).json({ message: Message('user').get, user });
+});
 
+// get Users
 exports.getAllUsers = catchAsyncError(async (req, res, next) => {
-  const users = await User.find();
+  const users = await User.find({ _id: { $ne: req.user.id } });
   res.status(200).json({
     message: Message('Users').get,
     users,
